@@ -7,6 +7,7 @@ RUN apt-get update \
  && apt-get clean
 
 RUN a2enmod rewrite \
+ && a2enmod headers \
  && docker-php-ext-install -j$(nproc) iconv mcrypt mysqli pdo_mysql gd zip \
  && service apache2 restart
 
@@ -23,7 +24,7 @@ COPY entrypoint.sh /entrypoint.sh
 RUN find /var/lib/mysql -type f -exec touch {} \; && \
  service mysql restart && \
  mysql -u root -ppassword -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password'" && \
- mysql -u root -ppassword -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
+ mysql -u root -ppassword -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" 
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
