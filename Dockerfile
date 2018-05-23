@@ -3,7 +3,7 @@ FROM php:5.6-apache
 RUN echo 'mysql-server mysql-server/root_password password password' | debconf-set-selections
 RUN echo 'mysql-server mysql-server/root_password_again password password' | debconf-set-selections
 RUN apt-get update \
- && apt-get install -y zip unzip git libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev mysql-server nano phpunit \
+ && apt-get install -y zip unzip git libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev mysql-server nano \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
