@@ -36,3 +36,10 @@ ENTRYPOINT ["/entrypoint.sh"]
 CMD ["apache2-foreground"]
 
 # You must add the databases and populate the database in your own dockerfile
+# Note that you need some boilerplate code for mysql to accept it.
+# See the example below. It will create a schema and populate it with a dump.sql file
+
+# COPY dump.sql /dump.sql
+# RUN find /var/lib/mysql -type f -exec touch {} \; && service mysql restart \ # This line is required for your mysql command to work
+#  && mysql -u root -ppassword -e "CREATE DATABASE IF NOT EXISTS my_schema" \
+#  && mysql -u root -ppassword my_schema < /dump.sql
